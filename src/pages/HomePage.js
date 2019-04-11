@@ -6,13 +6,11 @@ export default class HomePage extends Component {
     render() {
         return (
             <ProductList 
-                onAddToCart= { this.onAddToCart }
+                onAddToCart= { this.props.onAddToCart }
             />
             
         )
     }
 
-    onAddToCart = (product) => {
-        console.log("product", product);
-    }
+    
 }

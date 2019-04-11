@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import './Header.css';
+import { Link } from 'react-router-dom';
 
 export default class Header extends Component {
     render() {
+        let { totalCartItems } = this.props;
         return (
             <header id="aa-header">
                 {/* <!-- start header top  --> */}
@@ -43,19 +45,19 @@ export default class Header extends Component {
                         {/* <!-- logo  --> */}
                         <div className="aa-logo">
                             {/* <!-- Text based logo --> */}
-                            <a >
+                            <Link to="/">
                                 <span className="fa fa-shopping-cart"></span>
                                 <p>daily<strong>Shop</strong> <span>Your Shopping Partner</span></p>
-                            </a>
+                            </Link>
                            
                         </div>
                         {/* <!-- cart box --> */}
                         <div className="aa-cartbox">
-                            <a className="aa-cart-link" >
-                            <span className="fa fa-shopping-basket"></span>
-                            <span className="aa-cart-title">SHOPPING CART</span>
-                            <span className="aa-cart-notify">10</span>
-                            </a>
+                            <Link to="/cart" className="aa-cart-link" >
+                                <span className="fa fa-shopping-basket"></span>
+                                <span className="aa-cart-title">SHOPPING CART</span>
+                                <span className="aa-cart-notify">{ totalCartItems }</span>
+                            </Link>
                             
                         </div>
                         {/* <!-- / cart box --> */}

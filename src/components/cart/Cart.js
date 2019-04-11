@@ -1,7 +1,21 @@
 import React, { Component } from 'react';
 import './Cart.css';
+import CartItem from '../cartItem/CartItem';
 
 export default class Cart extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            cartItems: []
+        }
+    }
+
+    componentDidMount = () => {
+        this.setState({
+            cartItems: this.props.cartItems
+        }, ()=> {console.log("cartItems: ", this.state.cartItems)});
+    }
     render() {
         return (
             <section id="cart-view">
@@ -24,25 +38,7 @@ export default class Cart extends Component {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                    <td>
-                                        <a className="remove">
-                                        <i className="fa fa-close" />
-                                        </a>
-                                    </td>
-                                    <td>
-                                        <img alt="img" />
-                                    </td>
-                                    <td>
-                                        <a className="aa-cart-title">product.title</a>
-                                    </td>
-                                    <td>product.price</td>
-                                    <td>
-                                        <input className="aa-cart-quantity" type="number" />
-                                    </td>
-                                    <td>product.totalPrice </td>
-                                    </tr>
-                                    
+                                    { this.showCartItems() }
                                 </tbody>
                                 </table>
                             </div>
@@ -55,7 +51,7 @@ export default class Cart extends Component {
                                 
                                 <tr>
                                     <th>Total</th>
-                                    <td>totalOrderPrice </td>
+                                    <td> { this.getTotalPrice() } VND</td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -67,8 +63,34 @@ export default class Cart extends Component {
                     </div>
                 </div>
             </section>
-
-
         )
     }
+
+    showCartItems = () => {
+        let result = [];
+        let cartItems = this.state.cartItems;
+        if(cartItems.length > 0) {
+            result = cartItems.map((item, index) => {
+                return (
+                    <CartItem 
+                        key={ index }
+                        product={ item }
+                        onChangeQuantity={this.props.onChangeQuantity}
+                    />
+                )
+            });
+        }
+        return result;
+    }
+
+    getTotalPrice = () => {
+        let totalPrice = 0;
+        let cartItems = this.state.cartItems;
+        cartItems.forEach(item=>{
+            totalPrice += item.quantity * item.price;
+        });
+        return totalPrice;
+    }
+
+    
 }

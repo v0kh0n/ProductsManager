@@ -333,7 +333,7 @@ class ProductManagerPage extends Component {
             
           
             <div className="container">
-                
+                <hr />
                 <div className="text-center">
                     <h1>Products Manager</h1>
                 </div>
