@@ -1,0 +1,24 @@
+<section id="aa-product">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="aa-product-area">
+                        <div class="aa-product-inner">
+                            <div class="tab-content">
+                                <div class="tab-pane fade in active" id="men">
+                                    <ul class="aa-product-catg">
+                                        <li *ngFor="let product of products">
+                                            <app-product-item [product]="product">
+                                            </app-product-item>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
