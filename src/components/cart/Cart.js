@@ -10,7 +10,7 @@ export default class Cart extends Component {
                     <div className="col-md-12">
                         <div className="cart-view-area">
                         <div className="cart-view-table">
-                            <form action>
+                            <form >
                             <div className="table-responsive">
                                 <table className="table">
                                 <thead>

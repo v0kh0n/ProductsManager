@@ -5,16 +5,22 @@ import HomePage from './pages/HomePage';
 import Header from './components/header/Header';
 import CartPage from './pages/CartPage';
 
+import { BrowserRouter as Router, Switch, Route, Link } from'react-router-dom';
+
 class App extends Component {
 
     render() {
         
         return (
-            <div>
+            <Router>
                 <Header />
-                {/* <HomePage /> */}
-                <CartPage />
-            </div> 
+                <Switch>
+                    <Route path="/" exact component={ HomePage } />
+                    <Route path="/admin" exact component={ ProductManagerPage } />
+                    <Route path="/cart" render={() => <CartPage order="sssssss"/>}/>
+                </Switch>
+                {/* <CartPage /> */}
+            </Router> 
 
             
 
