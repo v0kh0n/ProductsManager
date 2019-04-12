@@ -7,6 +7,7 @@ export default class HomePage extends Component {
         return (
             <ProductList 
                 onAddToCart= { this.props.onAddToCart }
+                keyWord = { this.props.keyWord }
             />
             
         )

@@ -41,9 +41,15 @@ class ProductForm extends Component {
 
     onSubmit(event) {
         event.preventDefault();
-        
-        this.props.onSubmitPrdctForm(this.state);
-        this.onReset()
+        let product = this.state;
+
+        if(product.name.trim !="" && product.price >0 ){
+            alert("add product successfully!");
+            this.props.onSubmitPrdctForm(this.state);
+            this.onReset()
+        }else{
+            alert("somethings wrong");
+        }
         
     }
 

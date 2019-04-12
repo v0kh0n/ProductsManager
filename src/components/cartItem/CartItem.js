@@ -23,8 +23,11 @@ export default class CartItem extends Component {
         return (
             <tr>
                 <td>
-                    <a className="remove">
-                    <i className="fa fa-close" />
+                    <a 
+                        className="remove"
+                        onClick={ () => this.onDeleteItem(product.id) }
+                    >
+                        <i className="fas fa-times-circle"></i>
                     </a>
                 </td>
                 <td>
@@ -54,7 +57,7 @@ export default class CartItem extends Component {
         let product = this.state.product;
         let value = parseInt(target.value);
         if( (value && value <= 0) || !value){
-            value = 0;
+            value = 1;
         }
         this.props.onChangeQuantity(product.id ,value);
         
@@ -62,5 +65,9 @@ export default class CartItem extends Component {
         this.setState({
             product: product
         })
+    }
+
+    onDeleteItem(id) {
+        this.props.onDeleteItem(id);
     }
 }

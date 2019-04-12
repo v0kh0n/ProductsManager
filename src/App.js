@@ -4,6 +4,7 @@ import ProductManagerPage from './pages/ProductManagerPage';
 import HomePage from './pages/HomePage';
 import Header from './components/header/Header';
 import CartPage from './pages/CartPage';
+import callAPI from './callAPI';
 
 import { BrowserRouter as Router, Switch, Route, Link } from'react-router-dom';
 
@@ -12,24 +13,38 @@ class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            cartItems: []
+            cartItems: [],
+            keyWord: ""
         }
     }
+    
 
     render() {
         let { cartItems } = this.state;
         return (
             <Router>
-                <Header totalCartItems={ this.getTotalCartItems() }/>
+                <Header totalCartItems={ this.getTotalCartItems() } onSearch={ this.onSearch }/>
                 <Switch>
-                    <Route path="/" exact render={() => <HomePage onAddToCart={ this.onAddToCart } />} />
+                    <Route 
+                        path="/" 
+                        exact 
+                        render={(props) =>   
+                            <HomePage 
+                                { ...props }
+                                onAddToCart={ this.onAddToCart } 
+                                keyWord={this.state.keyWord}
+                            />} 
+                    />
                     <Route path="/admin" component={ ProductManagerPage } />
                     <Route 
                         path="/cart" 
-                        render={() => 
+                        render={(props) => 
                             <CartPage 
+                                { ...props }
                                 cartItems={ cartItems }
                                 onChangeQuantity={ this.onChangeQuantity }
+                                onDeleteItem={ this.onDeleteItem }
+                                onResetCart={ this.onResetCart }
                             />}
                     
                     />
@@ -79,6 +94,30 @@ class App extends Component {
 
     }
 
+    onResetCart = () => {
+        this.setState({
+            cartItems: []
+        });
+    }
+
+    onDeleteItem = (id) => {
+        let cartItems = this.state.cartItems;
+        let position = -1;
+        for(let i = 0; i < cartItems.length; i++) {
+            if(id === cartItems[i].id) {
+                position = i;
+                break;
+            }
+        }
+
+        cartItems.splice(position, 1);
+
+        this.setState({
+            cartItems: cartItems
+        })
+    }
+    
+
     onChangeQuantity = (id, quantity) => {
         let cartItems = this.state.cartItems;
         for(let i = 0; i < cartItems.length; i++) {
@@ -92,6 +131,11 @@ class App extends Component {
         })
     }
 
+    onSearch = (keyWord) => {
+        this.setState({
+            keyWord: keyWord
+        })
+    }
 
 }
 

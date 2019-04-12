@@ -3,8 +3,17 @@ import './Header.css';
 import { Link } from 'react-router-dom';
 
 export default class Header extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            keyWord: ""
+        }
+    }
+
     render() {
         let { totalCartItems } = this.props;
+        let { keyWord } = this.state;
         return (
             <header id="aa-header">
                 {/* <!-- start header top  --> */}
@@ -25,8 +34,8 @@ export default class Header extends Component {
             
                         <div className="aa-header-top-right">
                             <ul className="aa-head-top-nav-right">
-                            <li ><a>Admin</a></li>
-                            <li ><a>Login</a></li>
+                            <li ><Link to="/admin" >Admin</Link></li>
+                            <li ><a>Log out</a></li>
                             </ul>
                         </div>
                         </div>
@@ -64,8 +73,8 @@ export default class Header extends Component {
 
                         {/* <!-- search box --> */}
                         <div className="aa-search-box">
-                            <form >
-                            <input type="text" placeholder="Search here ex. 'man' "/>
+                            <form onSubmit={ this.onSearch }>
+                            <input type="text" placeholder="Search here ex. 'man' " name="keyWord" value={ keyWord } onChange={ this.onHandleChange }/>
                             <button type="submit"><span className="fa fa-search"></span></button>
                             </form>
                         </div>
@@ -78,4 +87,20 @@ export default class Header extends Component {
             </header>
         )
     }
+
+    onHandleChange = (event) => {
+        let target = event.target;
+        let name = target.name;
+        let value = target.value;
+        
+        this.setState({
+            [name]: value
+        })
+    }
+
+    onSearch = (event) => {
+        event.preventDefault();
+        this.props.onSearch(this.state.keyWord);
+    }
+
 }

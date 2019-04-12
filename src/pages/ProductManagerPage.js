@@ -31,18 +31,26 @@ class ProductManagerPage extends Component {
 
     //invoked after component is rendered.
     componentDidMount = () => {
-        this.getProducts();
+        this.getProducts(1,"id",-1);
     }
 
-    getProducts = (page) => {
+    getProducts = (page, sortField, type) => {
         let endPoint = "/products/?";
         let keyWord = this.state.keyWord.trim();
         let order = this.state.sort.type === 1 ? "asc" : "desc" ;
-        let sortField = this.state.sort.field;
+        
         let limit = this.state.limit;
 
         if(!page) {
             page = this.state.page;
+        }
+
+        if(!sortField) {
+            sortField = this.state.sort.field;
+        }
+
+        if(type) {
+            order = type === 1 ? "asc" : "desc" ;
         }
 
         if(keyWord !== ""){
@@ -73,7 +81,7 @@ class ProductManagerPage extends Component {
     addProduct = (product) => {
         callAPI("/products",'POST', product).then(res => {
             console.log("addProduct: ", res.data)
-            this.getProducts();
+            this.getProducts(1, "id", -1);
         }).catch(err => {
             console.log("addProduct Err: ", err);
         });

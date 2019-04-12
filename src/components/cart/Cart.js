@@ -16,6 +16,8 @@ export default class Cart extends Component {
             cartItems: this.props.cartItems
         }, ()=> {console.log("cartItems: ", this.state.cartItems)});
     }
+
+    
     render() {
         return (
             <section id="cart-view">
@@ -55,7 +57,7 @@ export default class Cart extends Component {
                                 </tr>
                                 </tbody>
                             </table>
-                            <a className="aa-cart-view-btn">Proced to Checkout</a>
+                            <a className="aa-cart-view-btn" onClick={ this.onCheckout }>Checkout</a>
                             </div>
                         </div>
                         </div>
@@ -76,6 +78,7 @@ export default class Cart extends Component {
                         key={ index }
                         product={ item }
                         onChangeQuantity={this.props.onChangeQuantity}
+                        onDeleteItem={ this.props.onDeleteItem }
                     />
                 )
             });
@@ -90,6 +93,10 @@ export default class Cart extends Component {
             totalPrice += item.quantity * item.price;
         });
         return totalPrice;
+    }
+
+    onCheckout = () => {
+        this.props.onCheckout();
     }
 
     
